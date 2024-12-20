@@ -93,4 +93,16 @@ export const logoutUser = async (req: Request, res: Response, next: NextFunction
         next(err);
     }
 };
+//pagination const skip= (page - 1) * limit ,
 
+// dynamicGetQuery('users', { age: 25, status: 'active' }, 'name ASC', 10, 0)
+//   .then(rows => console.log(rows));
+
+// dynamicInsert('users', { name: 'John Doe', age: 30, status: 'active' })
+//   .then(row => console.log(row));
+
+// dynamicUpdate('users', { status: 'inactive' }, { column: 'id', value: 1 })
+//   .then(updated => console.log(updated, 'rows updated'));
+
+// dynamicDelete('users', { column: 'id', value: 1 })
+//   .then(deleted => console.log(deleted, 'rows deleted'));
