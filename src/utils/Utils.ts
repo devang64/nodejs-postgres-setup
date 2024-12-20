@@ -39,44 +39,7 @@ class Utils {
         const isMatch = await bcrypt.compare(password, hashedPassword);
         return isMatch;
     };
-    static getExtension(mimetype: string): string | null {
-        switch (mimetype) {
-            case 'image/jpeg':
-                return '.jpg';
-            case 'image/png':
-                return '.png';
-            case 'image/gif':
-                return '.gif';
-            case 'image/webp':
-                return '.webp';
-            default:
-                return '.jpg';
-        }
-    }
-
-    static uploadSingleImage = async (image: any, uploadPath: string, res: Response) => {
-        const random = Utils.genrateRandomNumber();
-        let ext: any;
-        let buffer: any;
-
-        if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath, { recursive: true });
-        }
-
-        if (image.data) {
-            const { mimetype } = image;
-            ext = Utils.getExtension(mimetype);
-            buffer = image.data;
-        }
-
-        const filePath = path.join(uploadPath, `${random}${ext}`);
-        await fs.promises.writeFile(filePath, buffer).catch((err: any) => {
-            console.error(`Error writing file ${random}:`, err);
-            this.handleResponse(res, 500, false, "Error uploading file")
-        });
-        return `${random}${ext}`
-    }
-
+    
     static removeImage = async (fileName: any, uploadPath: string) => {
         const filePath = path.join(uploadPath, fileName);
         fs.unlink(filePath, () => {
@@ -109,22 +72,6 @@ class Utils {
             return { success: false, error: error.message };
         }
     }
-
-
-    //import cloudinary.v2
-    // static imageUpload = async (image: any, res: any, folder: string) => {
-    //     try {
-    //         const b64 = Buffer.from(image.data).toString("base64");
-    //         let dataURI = `data:${image.mimetype};base64,${b64}`;
-    //         const uploadImage = await cloudinary.uploader.upload(dataURI, { folder });
-    //         if (!uploadImage || !uploadImage.secure_url) {
-    //             return res.status(500).json({ success: false, message: "Image upload failed" });
-    //         }
-    //         return uploadImage.secure_url
-    //     } catch (error) {
-    //         console.log('error: ', error);
-    //     }
-    // }
 }
 
 export default Utils;
